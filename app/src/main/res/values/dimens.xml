@@ -1,0 +1,25 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="width_slide_menu">265dp</dimen>
+    <dimen name="album_width">345dp</dimen>
+    <dimen name="album_top">35dp</dimen>
+    <dimen name="width_play_button">80dp</dimen>
+    <dimen name="width_next_button">60dp</dimen>
+    <dimen name="height_play_lin">95dp</dimen>
+    <dimen name="height_music_play_info">50dp</dimen>
+    <dimen name="width_music_icon">32dp</dimen>
+    <dimen name="height_play_num">18dp</dimen>
+    <dimen name="width_min_play_num">30dp</dimen>
+    <dimen name="dp1">1dp</dimen>
+    <dimen name="dp2">2dp</dimen>
+    <dimen name="padding_card_view">20dp</dimen>
+    <dimen name="height_slide_menu_button">30dp</dimen>
+    <dimen name="top_slide_menu_content">50dp</dimen>
+    <dimen name="height_button_normal">40dp</dimen>
+    <dimen name="height_icon_slide_menu_button">24dp</dimen>
+    <dimen name="right_margin_slide_menu_button_icon">30dp</dimen>
+    <dimen name="dp10">10dp</dimen>
+    <dimen name="dp20">20dp</dimen>
+</resources>
