@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.waterfairy.utils.PermissionUtils;
 import com.waterfairy.zero.R;
 
 public class SplashActivity extends AppCompatActivity {
@@ -17,7 +18,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_activiy);
 
-        handler.sendEmptyMessageDelayed(0, 500);
+        PermissionUtils.requestPermission(this, PermissionUtils.REQUEST_STORAGE);
+        handler.sendEmptyMessageDelayed(0, 2000);
     }
 
     Handler handler = new Handler() {

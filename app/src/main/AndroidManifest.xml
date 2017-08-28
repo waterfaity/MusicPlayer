@@ -21,7 +21,20 @@
         <activity
             android:name=".activity.MainActivity"
             android:theme="@style/TranslucentThemNoActionBar" />
-        <activity android:name=".activity.MusicListActivity"></activity>
+        <activity
+            android:name=".activity.MusicListActivity"
+            android:theme="@style/TranslucentThemNoActionBar" />
+
+        <service
+            android:name=".service.MediaPlayerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.waterfairy.zero.MediaPlayerService_play" />
+                <action android:name="com.waterfairy.zero.MediaPlayerService_stop" />
+                <action android:name="com.waterfairy.zero.MediaPlayerService_pause" />
+                <action android:name="com.waterfairy.zero.MediaPlayerService_seek" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

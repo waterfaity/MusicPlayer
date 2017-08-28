@@ -22,6 +22,7 @@ import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -34,13 +35,20 @@ import java.io.IOException;
  */
 
 public class ImageUtils {
+    private static final String TAG = "imgUtils";
+
     public static boolean saveBitmap(String imgPath, Bitmap source) {
         return saveBitmap(imgPath, source, Bitmap.CompressFormat.JPEG, 90);
     }
 
     public static boolean saveBitmap(String imgPath, Bitmap source, Bitmap.CompressFormat compressFormat, int quality) {
+        Log.i(TAG, "saveBitmap: " + imgPath);
         File file = new File(imgPath);
         if (!file.exists()) {
+            File parentFile = file.getParentFile();
+            if (!parentFile.exists()) {
+                parentFile.mkdirs();
+            }
             try {
                 file.createNewFile();
             } catch (IOException e) {
@@ -793,7 +801,7 @@ public class ImageUtils {
      * @param style  方式  x,y,xy
      * @param length 宽度或长度
      * @param bitmap 平铺的图片
-     * @param extra  xy时  (length 作为宽 extra作为高)
+     * @param extra STYLE_XY时  (length 作为宽 extra作为高)
      * @return
      */
     public static Bitmap repeat(int style, int length, Bitmap bitmap, int extra) {
@@ -827,4 +835,5 @@ public class ImageUtils {
         }
         return bitmapTemp;
     }
+
 }
