@@ -24,6 +24,7 @@ public class PlayProgressBar extends RelativeLayout {
     private int mViewWidth;
     private int dp2;
     private OnProgressChangedListener listener;
+    private float radio;
 
 
     public PlayProgressBar(Context context) {
@@ -83,6 +84,7 @@ public class PlayProgressBar extends RelativeLayout {
 
 
     private void initProgress() {
+        if (mPressedView == null) return;
         RelativeLayout.LayoutParams pressedLayout = (LayoutParams) mPressedView.getLayoutParams();
         pressedLayout.width = mProgress;
         mPressedView.setLayoutParams(pressedLayout);
@@ -95,6 +97,11 @@ public class PlayProgressBar extends RelativeLayout {
 
     public void setMaxProgress(int maxProgress) {
         this.mMaxProgress = maxProgress;
+    }
+
+    public void setProgress(float radio) {
+        this.radio = radio;
+        setProgress((int) (mMaxProgress * radio));
     }
 
     @Override

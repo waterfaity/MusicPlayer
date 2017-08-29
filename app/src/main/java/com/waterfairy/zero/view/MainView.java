@@ -5,4 +5,8 @@ package com.waterfairy.zero.view;
  */
 
 public interface MainView {
+
+    void setMusicInfoSin(String musicName, int totalNum, int currentPos);
+
+    void setMusicInfoTime(float radio, String duration, String currentPosition);
 }

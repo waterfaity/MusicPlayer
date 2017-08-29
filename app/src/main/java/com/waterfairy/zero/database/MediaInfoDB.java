@@ -10,23 +10,48 @@ import org.greenrobot.greendao.annotation.Generated;
  */
 @Entity
 public class MediaInfoDB {
+    public static final String EXTENSION_MP3 = "mp3";
     @Id(autoincrement = true)
-    private long id;
-
-    @Generated(hash = 1729383791)
-    public MediaInfoDB(long id) {
+    private Long id;
+    private String musicPath;
+    private String musicName;
+    private String extension;
+    @Generated(hash = 2008569032)
+    public MediaInfoDB(Long id, String musicPath, String musicName,
+            String extension) {
         this.id = id;
+        this.musicPath = musicPath;
+        this.musicName = musicName;
+        this.extension = extension;
     }
-
     @Generated(hash = 1683354870)
     public MediaInfoDB() {
     }
-
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
-
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
+    public String getMusicPath() {
+        return this.musicPath;
+    }
+    public void setMusicPath(String musicPath) {
+        this.musicPath = musicPath;
+    }
+    public String getMusicName() {
+        return this.musicName;
+    }
+    public void setMusicName(String musicName) {
+        this.musicName = musicName;
+    }
+    public String getExtension() {
+        return this.extension;
+    }
+    public void setExtension(String extension) {
+        this.extension = extension;
+    }
+
+
+
 }

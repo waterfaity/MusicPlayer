@@ -3,11 +3,11 @@
     android:id="@+id/rel_play_info"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@drawable/music_info_style"
-    android:paddingBottom="3dp"
     android:clickable="true"
     android:onClick="showMusicList"
+    android:orientation="vertical"
+    android:paddingBottom="3dp"
     android:paddingLeft="12dp"
     android:paddingRight="12dp"
     android:paddingTop="3dp">
@@ -22,26 +22,30 @@
 
     <LinearLayout
         android:id="@+id/music_info_lin"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/tv_play_num"
         android:layout_toRightOf="@+id/iv_music"
         android:gravity="center_vertical"
         android:orientation="vertical"
-        android:paddingLeft="8dp">
+        android:paddingLeft="8dp"
+        android:paddingRight="5dp">
 
         <TextView
             android:id="@+id/tv_music_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="你是我心内的一首歌"
+            android:singleLine="true"
+            android:text="**"
             android:textColor="@color/white"
             android:textSize="14sp" />
 
         <TextView
+            android:singleLine="true"
             android:id="@+id/tv_music_singer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="王力宏/selina"
+            android:text="**"
             android:textColor="@color/singer"
             android:textSize="12sp" />
     </LinearLayout>
@@ -56,7 +60,7 @@
         android:gravity="center"
         android:paddingLeft="6dp"
         android:paddingRight="6dp"
-        android:text="11/12"
+        android:text="0/0"
         android:textSize="13sp" />
 
 </RelativeLayout>

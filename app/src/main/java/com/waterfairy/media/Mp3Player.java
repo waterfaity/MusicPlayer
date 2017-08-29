@@ -125,12 +125,20 @@ public class Mp3Player {
             initMP3();
         }
         try {
-            if (!TextUtils.equals(mediaPath, currentPath)) {
-                mediaPlayer.setDataSource(mediaPath);
-                mediaPlayer.prepare();
-            }
-            if (playState == STOP) {
-                mediaPlayer.prepare();
+            try {
+                if (!TextUtils.equals(mediaPath, currentPath)) {
+                    mediaPlayer.setDataSource(mediaPath);
+                    mediaPlayer.prepare();
+                }
+                if (playState == STOP) {
+                    mediaPlayer.prepare();
+                }
+            } catch (IOException | IllegalStateException e) {
+                if (onMp3PlayListener != null) {
+                    onMp3PlayListener.onMp3PlayError(ERROR_PLAY, "文件初始化失败");
+                }
+                mediaState = ERROR;
+                return;
             }
             this.currentPath = mediaPath;
             if (time >= 0) {
@@ -141,9 +149,10 @@ public class Mp3Player {
                 if (onMp3PlayListener != null)
                     onMp3PlayListener.onPlayStateChanged(PLAYING, "播放中");
             }
-        } catch (IOException | IllegalStateException e) {
-            e.printStackTrace();
             mediaState = PREPARED;
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            mediaState = ERROR;
         }
     }
 
@@ -237,8 +246,8 @@ public class Mp3Player {
     private boolean checkInit() {
         if (mediaPlayer == null) {
             if (onMp3PlayListener != null)
-                onMp3PlayListener.onMp3PlayError(ERROR_NOT_INIT, "播放器未初始化");
-            return false;
+//                onMp3PlayListener.onMp3PlayError(ERROR_NOT_INIT, "播放器未初始化");
+                return false;
         }
         return true;
     }

@@ -8,27 +8,32 @@
 
 
     <ImageButton
+        android:id="@+id/bt_previous"
         android:layout_width="@dimen/width_next_button"
         android:layout_height="@dimen/width_next_button"
         android:background="@null"
+        android:onClick="action"
         android:scaleType="fitXY"
         android:scaleX="-1"
         android:src="@drawable/next_pressed_style" />
 
     <CheckBox
+        android:id="@+id/bt_play"
+        style="@style/PlayCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="7dp"
         android:layout_marginRight="7dp"
         android:background="@null"
-        android:scaleType="fitXY"
-        style="@style/PlayCheckbox" />
+        android:scaleType="fitXY" />
 
     <ImageButton
+        android:id="@+id/bt_next"
         android:layout_width="@dimen/width_next_button"
         android:layout_height="@dimen/width_next_button"
         android:background="@null"
+        android:onClick="action"
         android:scaleType="fitXY"
-        android:src="@drawable/next_pressed_style"  />
+        android:src="@drawable/next_pressed_style" />
 
 </LinearLayout>
