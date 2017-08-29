@@ -104,6 +104,8 @@ public class MediaPlayManger {
             mCurrentPos--;
             if (mp3Player.getPlayState() == Mp3Player.PLAYING) {
                 play(mCurrentPos);
+            } else {
+                prepareMp3(mCurrentPos);
             }
             if (onMediaPlayListener != null) {
                 onMediaPlayListener.onPlay(mCurrentPos);
@@ -111,6 +113,27 @@ public class MediaPlayManger {
         } else {
             if (onMediaPlayListener != null)
                 onMediaPlayListener.onFirstWorm();
+        }
+    }
+
+    private MediaInfoDB prepareMp3(int pos) {
+        mCurrentPos = pos;
+        if (mediaInfoDBs != null && mediaInfoDBs.size() > pos && mp3Player != null) {
+            mediaInfoDB = mediaInfoDBs.get(mCurrentPos);
+            String musicPath = mediaInfoDB.getMusicPath();
+            if (mp3Player.getMediaState() != Mp3Player.NOT_INIT) {
+                mp3Player.release();
+            }
+            mp3Player.prepare(musicPath);
+            handler.sendEmptyMessage(0);
+            if (onMediaPlayListener != null) {
+                onMediaPlayListener.onPlay(mCurrentPos);
+            }
+            return mediaInfoDB;
+        } else {
+            if (onMediaPlayListener != null)
+                onMediaPlayListener.onError();
+            return null;
         }
     }
 
@@ -122,6 +145,8 @@ public class MediaPlayManger {
             mCurrentPos++;
             if (mp3Player.getPlayState() == Mp3Player.PLAYING) {
                 play(mCurrentPos);
+            } else {
+                prepareMp3(mCurrentPos);
             }
             if (onMediaPlayListener != null) {
                 onMediaPlayListener.onPlay(mCurrentPos);
@@ -152,24 +177,11 @@ public class MediaPlayManger {
      * 播放
      */
     public MediaInfoDB play(int pos) {
-        mCurrentPos = pos;
-        if (mediaInfoDBs != null && mediaInfoDBs.size() > pos && mp3Player != null) {
-            mediaInfoDB = mediaInfoDBs.get(mCurrentPos);
-            String musicPath = mediaInfoDB.getMusicPath();
-            if (mp3Player.getMediaState() != Mp3Player.NOT_INIT) {
-                mp3Player.release();
-            }
-            mp3Player.play(musicPath);
-            handler.sendEmptyMessage(0);
-            if (onMediaPlayListener != null) {
-                onMediaPlayListener.onPlay(mCurrentPos);
-            }
-            return mediaInfoDB;
-        } else {
-            if (onMediaPlayListener != null)
-                onMediaPlayListener.onError();
-            return null;
+        MediaInfoDB mediaInfoDB = prepareMp3(pos);
+        if (mediaInfoDB != null) {
+            mp3Player.play(mediaInfoDB.getMusicPath());
         }
+        return mediaInfoDB;
 
     }
 

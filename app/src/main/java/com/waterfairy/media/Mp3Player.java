@@ -24,9 +24,10 @@ public class Mp3Player {
     public static final int ERROR_PLAY = 104;//播放错误
 
     private int mediaState;//播放器状态
-    public static final int NOT_INIT = 0;
-    public static final int PREPARED = 1;
-    public static final int ERROR = 2;
+    public static final int NOT_INIT = 0;//未初始化的
+    public static final int PLAYED = 1;//开始播放或已经播放过的
+    public static final int PREPARED = 2;//准备好的
+    public static final int ERROR = 3;//错误
 
     private int playState;//播放状态
     public static final int PLAYING = 11;
@@ -108,39 +109,59 @@ public class Mp3Player {
     }
 
     /**
+     * 准备
+     *
+     * @param mediaPath
+     */
+    public boolean prepare(String mediaPath) {
+        mediaState = NOT_INIT;
+        File file = new File(mediaPath);
+        if (!file.exists()) {
+            if (onMp3PlayListener != null)
+                onMp3PlayListener.onMp3PlayError(ERROR_NOT_EXIST, "文件不存在");
+            mediaState = ERROR;
+        } else {
+            if (!checkInit()) {
+                initMP3();
+            }
+            try {
+                try {
+                    if (!TextUtils.equals(mediaPath, currentPath)) {
+                        mediaPlayer.setDataSource(mediaPath);
+                        mediaPlayer.prepare();
+                    }
+                    if (playState == STOP) {
+                        mediaPlayer.prepare();
+                    }
+                } catch (IOException | IllegalStateException e) {
+                    if (onMp3PlayListener != null) {
+                        onMp3PlayListener.onMp3PlayError(ERROR_PLAY, "文件初始化失败");
+                    }
+                    mediaState = ERROR;
+                }
+                if (mediaState != ERROR) {
+                    this.currentPath = mediaPath;
+                    mediaState = PREPARED;
+                    return true;
+                }
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+                mediaState = ERROR;
+
+            }
+        }
+        mediaPlayer.release();
+        return false;
+    }
+
+    /**
      * 播放
      *
      * @param mediaPath
      * @param time      播放位置  毫秒
      */
     public void play(String mediaPath, int time) {
-        File file = new File(mediaPath);
-        if (!file.exists()) {
-            if (onMp3PlayListener != null)
-                onMp3PlayListener.onMp3PlayError(ERROR_NOT_EXIST, "文件不存在");
-            mediaState = ERROR;
-            return;
-        }
-        if (!checkInit()) {
-            initMP3();
-        }
-        try {
-            try {
-                if (!TextUtils.equals(mediaPath, currentPath)) {
-                    mediaPlayer.setDataSource(mediaPath);
-                    mediaPlayer.prepare();
-                }
-                if (playState == STOP) {
-                    mediaPlayer.prepare();
-                }
-            } catch (IOException | IllegalStateException e) {
-                if (onMp3PlayListener != null) {
-                    onMp3PlayListener.onMp3PlayError(ERROR_PLAY, "文件初始化失败");
-                }
-                mediaState = ERROR;
-                return;
-            }
-            this.currentPath = mediaPath;
+        if (mediaState == PREPARED || prepare(mediaPath)) {
             if (time >= 0) {
                 mediaPlayer.seekTo(time);
             } else {
@@ -149,10 +170,7 @@ public class Mp3Player {
                 if (onMp3PlayListener != null)
                     onMp3PlayListener.onPlayStateChanged(PLAYING, "播放中");
             }
-            mediaState = PREPARED;
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-            mediaState = ERROR;
+            mediaState = PLAYED;
         }
     }
 
